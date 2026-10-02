@@ -33,3 +33,14 @@ class ConflictError(DomainError):
 
     code = "conflict"
     status = 409
+
+
+class UnfulfillableError(DomainError):
+    """当前库存、运力或渠道规则无法支撑该承诺。"""
+
+    code = "unfulfillable"
+    status = 422
+
+    def __init__(self, message: str, details: dict | None = None) -> None:
+        super().__init__(message)
+        self.details = details or {}
