@@ -33,3 +33,24 @@ class ConflictError(DomainError):
 
     code = "conflict"
     status = 409
+
+
+class InsufficientCapacityError(DomainError):
+    """现货或运力不足以支撑当前承诺。"""
+
+    code = "insufficient_capacity"
+    status = 409
+
+
+class QuoteExpiredError(DomainError):
+    """报价已经超过有效期，需要重新询价。"""
+
+    code = "quote_expired"
+    status = 409
+
+
+class OrderStateError(DomainError):
+    """订单当前状态不允许执行该动作。"""
+
+    code = "order_state_invalid"
+    status = 409

@@ -34,3 +34,29 @@ class FixedClock:
         """返回固定的 UTC 时间。"""
 
         return self._value
+
+
+class MutableClock:
+    """提供可被测试与验收脚本推进的时间。"""
+
+    def __init__(self, value: datetime) -> None:
+        if value.tzinfo is None:
+            raise ValueError("初始时间必须包含时区")
+        self._value = value.astimezone(timezone.utc)
+
+    def now(self) -> datetime:
+        """返回当前设置的 UTC 时间。"""
+
+        return self._value
+
+    def advance(self, seconds: float = 0, **kwargs: float) -> None:
+        """按秒数或 timedelta 关键字推进时间。"""
+
+        if kwargs:
+            from datetime import timedelta
+
+            self._value += timedelta(**kwargs)
+        if seconds:
+            from datetime import timedelta
+
+            self._value += timedelta(seconds=seconds)
